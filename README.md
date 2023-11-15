@@ -1,4 +1,4 @@
-# rental_app
+# SE_Rental_App
 
 A new Flutter project dedicated to Software Engineering Course Offered at IBA
 
