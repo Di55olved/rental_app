@@ -1,6 +1,6 @@
 # rental_app
 
-A new Flutter project.
+A new Flutter project dedicated to Software Engineering Course Offered at IBA
 
 ## Getting Started
 
