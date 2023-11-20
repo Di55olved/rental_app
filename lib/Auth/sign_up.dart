@@ -83,9 +83,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           if (check == true) {
                             await Api.auth.createUserWithEmailAndPassword(
                                 email: emailValue, password: passValue);
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => const SignInPage()));
+                            await Api.createUser().then((value) {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignInPage()));
+                            });
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
