@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextField(
                       controller: otpController,
                       decoration: const InputDecoration(
-                          label: Text("Enter OTP: "),
+                          label: Text("Enter OTP (check spam folder): "),
                           enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0)),
