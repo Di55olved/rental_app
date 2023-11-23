@@ -7,10 +7,6 @@ import 'package:rental_app/Apis/api.dart';
 class MiscAttributesMethods extends ChangeNotifier {
   Map<String, dynamic> userData = {};
 
-  MiscAttributesMethods() {
-    fetchUserData();
-  }
-
   Future<void> fetchUserData() async {
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:email_otp/email_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_app/Apis/api.dart';
+import 'package:rental_app/Apis/user.dart';
 import 'package:rental_app/Auth/sign_in.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -83,12 +84,23 @@ class _SignUpPageState extends State<SignUpPage> {
                           if (check == true) {
                             await Api.auth.createUserWithEmailAndPassword(
                                 email: emailValue, password: passValue);
-                            await Api.createUser().then((value) {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignInPage()));
-                            });
+                            Users user = Users(
+                                image: 'null',
+                                balance: 0,
+                                strikes: 0,
+                                name: 'null',
+                                id: Api.auth.currentUser!.uid,
+                                email: Api.auth.currentUser!.email.toString(),
+                                status: 'Active');
+
+                            await Api.firestore
+                                .collection('users')
+                                .doc(Api.auth.currentUser!.uid)
+                                .set(user.toJson());
+
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const SignInPage()));
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -173,6 +185,17 @@ class _SignUpPageState extends State<SignUpPage> {
                       validator: (value) {
                         if (value != null && value.length > 20) {
                           return "Max Character limit 20";
+                        }
+                        if (value != null && value.length < 8) {
+                          return "Password should be atleast 8 characters long";
+                        }
+                        // Check if the password contains at least one digit
+                        if (!value!.contains(RegExp(r'\d'))) {
+                          return "Password should contain at least one digit";
+                        }
+                        // Check if the password contains at least one uppercase character
+                        if (!value.contains(RegExp(r'[A-Z]'))) {
+                          return "Password should contain at least one uppercase character";
                         }
                         return null;
                       },
@@ -286,7 +309,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           const Color.fromARGB(255, 255, 181, 22)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40.0)))),
-                  child: const Text("Sign Up"),
+                  child: const Text(
+                    "Sign Up",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               //Space

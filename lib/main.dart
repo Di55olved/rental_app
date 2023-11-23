@@ -8,16 +8,18 @@ import 'package:rental_app/Model/misc.dart';
 import 'package:rental_app/Screens/home_screen.dart';
 import 'firebase_options.dart';
 
-void main() {
+MiscAttributesMethods obj = MiscAttributesMethods();
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   SystemChrome.setPreferredOrientations(
-          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
-      .then((value) async {
-    await _initializeFirebase();
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    runApp(const MyApp());
-  });
+  await _initializeFirebase();
+  await obj.fetchUserData();
+
+  runApp(const MyApp());
 }
 
 Future<void> _initializeFirebase() async {
@@ -31,7 +33,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MiscAttributesMethods obj = MiscAttributesMethods();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => obj),

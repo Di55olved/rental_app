@@ -253,8 +253,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: MediaQuery.sizeOf(context).width * 0.2,
                                 child: const Row(
                                   children: [
-                                    Icon(Icons.logout),
-                                    Text("Sign Out"),
+                                    Icon(
+                                      Icons.logout,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      "Sign Out",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   ],
                                 ),
                               ))
